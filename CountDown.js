@@ -5,35 +5,13 @@ import CountDown from "react-native-countdown-component";
 
 export const CountDown1 = () => {
   const { params } = useRoute();
-  const year = new Date().getFullYear();
-  const [expiryTime, setExpiryTime] = useState("01 jan 2023 18:00:00");
-  const [seconds, setSeconds] = useState(10);
-
-  const countdownTimer = () => {
-    const countdownDateTime = new Date(expiryTime).getTime();
-    console.log(expiryTime);
-    const currentTime = new Date().getTime();
-    const remainingTime = countdownDateTime - currentTime;
-    const remainingSeconds = Math.floor(remainingTime / 1000);
-
-    setSeconds(remainingSeconds);
-  };
-
-  useEffect(() => {
-    setExpiryTime("01 jan " + (100 - params?.age + year) + " 18:00:00");
-  });
-
-  useEffect(() => {
-    countdownTimer();
-  });
 
   return (
     <View style={styles.container}>
       <CountDown
         size={30}
-        until={seconds}
+        until={params?.rs}
         timeToShow={["S"]}
-        timeLabels={{ s: "Seconds till most likely dead" }}
         digitStyle={{
           backgroundColor: "Black",
         }}
@@ -41,7 +19,25 @@ export const CountDown1 = () => {
           color: "white",
         }}
       />
-      <Text style={styles.textStyle}>seconds to actually show: {seconds}</Text>
+
+      <Text style={styles.textStyle}>seconds till most likely dead.</Text>
+      <Text style={styles.textStyle}></Text>
+      <Text style={styles.textStyle}></Text>
+      <Text style={styles.textStyle}></Text>
+      <Text style={styles.textStyle}></Text>
+
+      <CountDown
+        size={30}
+        until={params?.rs}
+        timeToShow={["M"]}
+        digitStyle={{
+          backgroundColor: "Black",
+        }}
+        digitTxtStyle={{
+          color: "white",
+        }}
+      />
+      <Text style={styles.textStyle}>weeks to live.</Text>
     </View>
   );
 };

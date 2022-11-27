@@ -14,7 +14,13 @@ const page = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <page.Navigator>
+      <page.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "black",
+          },
+        }}
+      >
         <page.Screen name="DialogBog" component={DialogBox} />
         <page.Screen name="CountDown" component={CountDown1} />
       </page.Navigator>
