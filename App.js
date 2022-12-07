@@ -25,10 +25,6 @@ export default function App() {
     }
   };
 
-  function printerfunction() {
-    console.log("osanuifdsdef");
-  }
-
   useEffect(() => {
     checkIfAgeIsSubmitted();
   }, []);
@@ -47,7 +43,6 @@ export default function App() {
         >
           {ageIsSubmitted ? (
             <>
-              {printerfunction()}
               <page.Screen name="CountDown" component={CountDown1} />
               <page.Screen name="DialogBog" component={DialogBox} />
             </>
