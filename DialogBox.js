@@ -1,10 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import DialogInput from "react-native-dialog-input";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { TextInput } from "react-native-gesture-handler";
-import { Button } from "react-native-web";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const DialogBox = () => {
   const navigation = useNavigation();
@@ -23,6 +27,29 @@ export const DialogBox = () => {
     });
   }
 
+  const [age3, setAge3] = useState();
+
+  const saveFunction = async () => {
+    try {
+      const value = await AsyncStorage.setItem("@age", age1);
+      console.log("age should be saved now");
+    } catch (error) {
+      console.log("eRrOr MsG: ", error);
+    }
+  };
+
+  const load = async () => {
+    try {
+      let age3 = await AsyncStorage.getItem("@age");
+      console.log("prev age: ", age3);
+      if (age3 !== null) {
+        setAge3(age3);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Enter your age.</Text>
@@ -34,6 +61,8 @@ export const DialogBox = () => {
 
       <TouchableOpacity
         onPress={() => {
+          load();
+          saveFunction();
           var age1 = Number(this.age1);
           if (age1 >= 0 && age1 <= 99 && Number.isInteger(age1)) {
             calcSeconds(age1);
