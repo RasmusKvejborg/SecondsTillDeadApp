@@ -6,12 +6,14 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const DialogBox = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
 
   function calcSeconds(yearsOld) {
     const year = new Date().getFullYear();
@@ -27,8 +29,6 @@ export const DialogBox = () => {
     });
   }
 
-  const [age3, setAge3] = useState();
-
   const saveFunction = async () => {
     try {
       const value = await AsyncStorage.setItem("@age", age1);
@@ -38,48 +38,60 @@ export const DialogBox = () => {
     }
   };
 
-  const load = async () => {
-    try {
-      let age3 = await AsyncStorage.getItem("@age");
-      console.log("prev age: ", age3);
-      if (age3 !== null) {
-        setAge3(age3);
+  useEffect(() => {
+    const fetchValues = async () => {
+      const value = await AsyncStorage.getItem("@age");
+      if (value !== null) {
+        // if there has been entered a number, go to CountDown screen (calcSeconds takes care of that)
+        calcSeconds(Number(value));
+      } else {
+        setLoading(false); // if value is null, it should stop loading to show screen to input age. Else it just shows loading screen untill calcSeconds calls the CountDown page.
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    };
+    // jeg ku sgu nok egentlig bare fjerne value fra... kan sige didFocus...
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Enter your age.</Text>
-      <TextInput
-        keyboardType="numeric"
-        style={styles.input}
-        onChangeText={(text) => (this.age1 = text)}
-      />
+    // problemet i sin enhed er at jeg vil ikke have den til at loade medmindre value != null. Hvis der ikke er nogen value
+    // onFocus (BUT NOT ON USEEFFECT edit: det gør den heller ik ved tilbage) Men måske der skal en async function ind også. {setLoading(false)}
+    fetchValues();
+  }, []);
 
-      <TouchableOpacity
-        onPress={() => {
-          load();
-          saveFunction();
-          var age1 = Number(this.age1);
-          if (age1 >= 0 && age1 <= 99 && Number.isInteger(age1)) {
-            calcSeconds(age1);
-          } else if (age1 >= 100) {
-            alert("Really?? Your real age please.");
-          } else {
-            alert("Enter a valid age");
-          }
-        }}
-      >
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Start</Text>
-        </View>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-    </View>
-  );
+  if (!loading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>Enter your age.</Text>
+        <TextInput
+          keyboardType="numeric"
+          style={styles.input}
+          onChangeText={(text) => (this.age1 = text)}
+        />
+
+        <TouchableOpacity
+          onPress={() => {
+            saveFunction();
+            var age1 = Number(this.age1);
+            if (age1 >= 0 && age1 <= 99 && Number.isInteger(age1)) {
+              calcSeconds(age1);
+            } else if (age1 >= 100) {
+              alert("Really?? Your real age please.");
+            } else {
+              alert("Enter a valid age");
+            }
+          }}
+        >
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Start</Text>
+          </View>
+        </TouchableOpacity>
+        <StatusBar style="auto" />
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.buttonText}>Loading...</Text>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

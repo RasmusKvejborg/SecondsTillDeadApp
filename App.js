@@ -9,51 +9,44 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const page = createNativeStackNavigator();
 
 export default function App() {
-  const [ageIsSubmitted, setAgeIsSubmitted] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [ageIsSubmitted, setAgeIsSubmitted] = useState(false);
+  // const [loading, setLoading] = useState(true);
 
-  const checkIfAgeIsSubmitted = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@age");
-      if (value !== null) {
-        setAgeIsSubmitted(true);
-      }
-    } catch (err) {
-      console.log("MSG ERR in APP: ", err);
-    } finally {
-      setLoading(false); // when this function is done, loading is set to false, so its a way of waiting for it I guess. ***
-    }
-  };
+  // const checkIfAgeIsSubmitted = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem("@age");
+  //     if (value !== null) {
+  //       setAgeIsSubmitted(true);
+  //     }
+  //   } catch (err) {
+  //     console.log("MSG ERR in APP: ", err);
+  //   } finally {
+  //     setLoading(false); // when this function is done, loading is set to false, so its a way of waiting for it I guess. ***
+  //   }
+  // };
 
-  useEffect(() => {
-    checkIfAgeIsSubmitted();
-  }, []);
+  // useEffect(() => {
+  //   checkIfAgeIsSubmitted();
+  // }, []);
 
   return (
     <NavigationContainer>
-      {loading ? (
+      {/* {loading ? (
         <ActivityIndicator size={"large"} /> // if it is loading, show a loading activityIndicator. If its done loading, then show all of the below.
-      ) : (
-        <page.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "black",
-            },
-          }}
-        >
-          {ageIsSubmitted ? (
-            <>
-              <page.Screen name="CountDown" component={CountDown1} />
-              <page.Screen name="DialogBog" component={DialogBox} />
-            </>
-          ) : (
-            <>
-              <page.Screen name="DialogBog" component={DialogBox} />
-              <page.Screen name="CountDown" component={CountDown1} />
-            </>
-          )}
-        </page.Navigator>
-      )}
+      ) : ( */}
+      <page.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "black",
+          },
+        }}
+      >
+        <>
+          <page.Screen name="DialogBog" component={DialogBox} />
+          <page.Screen name="CountDown" component={CountDown1} />
+        </>
+      </page.Navigator>
+      {/* )} */}
     </NavigationContainer>
   );
 }
