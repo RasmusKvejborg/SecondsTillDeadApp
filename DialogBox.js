@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -48,11 +49,10 @@ export const DialogBox = () => {
         setLoading(false); // if value is null, it should stop loading to show screen to input age. Else it just shows loading screen untill calcSeconds calls the CountDown page.
       }
     };
-    // jeg ku sgu nok egentlig bare fjerne value fra... kan sige didFocus...
 
-    // problemet i sin enhed er at jeg vil ikke have den til at loade medmindre value != null. Hvis der ikke er nogen value
-    // onFocus (BUT NOT ON USEEFFECT edit: det gør den heller ik ved tilbage) Men måske der skal en async function ind også. {setLoading(false)}
-    fetchValues();
+    return navigation.addListener("focus", () => {
+      fetchValues();
+    });
   }, []);
 
   if (!loading) {
@@ -67,14 +67,14 @@ export const DialogBox = () => {
 
         <TouchableOpacity
           onPress={() => {
-            saveFunction();
             var age1 = Number(this.age1);
             if (age1 >= 0 && age1 <= 99 && Number.isInteger(age1)) {
+              saveFunction();
               calcSeconds(age1);
             } else if (age1 >= 100) {
-              alert("Really?? Your real age please.");
+              Alert.alert("Really?? Your real age please.");
             } else {
-              alert("Enter a valid age");
+              Alert.alert("Enter a valid age");
             }
           }}
         >
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
     backgroundColor: "black",
     borderColor: "white",
+    marginBottom: 160,
   },
   input: {
     borderWidth: 1,

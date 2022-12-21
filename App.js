@@ -2,51 +2,64 @@ import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DialogBox } from "./DialogBox.js";
 import { CountDown1 } from "./CountDown.js";
-import { NavigationContainer } from "@react-navigation/native";
-import { ActivityIndicator, NativeAppEventEmitter } from "react-native";
+import {
+  createNavigationContainerRef,
+  NavigationContainer,
+} from "@react-navigation/native";
+import {
+  ActivityIndicator,
+  NativeAppEventEmitter,
+  Button,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  StatusBar,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ThemeColors } from "react-navigation";
 
 const page = createNativeStackNavigator();
+export const navigationRef = createNavigationContainerRef();
 
 export default function App() {
-  // const [ageIsSubmitted, setAgeIsSubmitted] = useState(false);
-  // const [loading, setLoading] = useState(true);
-
-  // const checkIfAgeIsSubmitted = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem("@age");
-  //     if (value !== null) {
-  //       setAgeIsSubmitted(true);
-  //     }
-  //   } catch (err) {
-  //     console.log("MSG ERR in APP: ", err);
-  //   } finally {
-  //     setLoading(false); // when this function is done, loading is set to false, so its a way of waiting for it I guess. ***
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   checkIfAgeIsSubmitted();
-  // }, []);
-
   return (
-    <NavigationContainer>
-      {/* {loading ? (
-        <ActivityIndicator size={"large"} /> // if it is loading, show a loading activityIndicator. If its done loading, then show all of the below.
-      ) : ( */}
+    <NavigationContainer ref={navigationRef}>
       <page.Navigator
         screenOptions={{
           headerStyle: {
             backgroundColor: "black",
           },
+          headerTitleStyle: {
+            color: "black",
+          },
         }}
       >
-        <>
-          <page.Screen name="DialogBog" component={DialogBox} />
-          <page.Screen name="CountDown" component={CountDown1} />
-        </>
+        <page.Screen name="DialogBox" component={DialogBox} />
+        <page.Screen
+          name="CountDown"
+          options={{
+            StatusBar: { backgroundColor: "black" },
+            navigationBarHidden: true,
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={async () => {
+                  await AsyncStorage.removeItem("@age");
+                  navigationRef.navigate("DialogBox");
+                }}
+              >
+                <Text style={styles.backButton}>Go back </Text>
+              </TouchableOpacity>
+            ),
+          }}
+          component={CountDown1}
+        />
       </page.Navigator>
-      {/* )} */}
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  backButton: {
+    color: "grey",
+  },
+});
