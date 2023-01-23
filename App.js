@@ -38,8 +38,12 @@ export default function App() {
         <page.Screen
           name="CountDown"
           options={{
-            StatusBar: { backgroundColor: "black" },
-            navigationBarHidden: true,
+            // StatusBar: { backgroundColor: "black" },
+            // navigationBarHidden: true,
+            navigationBarColor: "black",
+            headerStyle: {
+              backgroundColor: "black",
+            },
             headerLeft: () => (
               <TouchableOpacity
                 onPress={async () => {

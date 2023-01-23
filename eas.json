@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 2.7.1",
+    "promptToConfigurePushNotifications": false
+  },
+  "build": {
+    "development": {
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleDebug"
+      },
+      "ios": {
+        "buildConfiguration": "Debug"
+      }
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "rasmuskvejborg@gmail.com",
+        "ascAppId": "1667183565",
+        "appleTeamId": "92Y2D663VT"
+      }
+    }
+  }
+}

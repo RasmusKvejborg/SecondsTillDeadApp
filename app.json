@@ -1,33 +1,19 @@
 {
   "expo": {
-    "name": "secondsTillDead",
-    "slug": "secondsTillDead",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
+    "slug": "secondstilldead",
+    "name": "Seconds Till Dead",
+    "version": "8.0.0",
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+      "package": "com.studsk.secondstilldead"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3fcde6e2-61d5-427c-b25c-becd56820f82"
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "ios": {
+      "bundleIdentifier": "com.studsk.secondstilldead"
     }
-  }
+  },
+  "name": "Seconds Till Dead"
 }

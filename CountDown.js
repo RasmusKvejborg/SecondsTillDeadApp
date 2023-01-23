@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import CountDown from "react-native-countdown-component";
+// import CountDown from "react-native-countdown-component";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CountDown from "./react-native-countdown-component_copied";
 
 export const CountDown1 = () => {
   const { params } = useRoute();
@@ -87,8 +88,12 @@ export const CountDown1 = () => {
         <Text style={styles.textStyleLeftDots}>{whiteDots}</Text>
       </Text>
 
-      <Text style={styles.textStyleDotsExplainer}>
-        Grey dots are weeks already lived.{" "}
+      <Text>
+        <Text style={styles.textStyleDotsExplainer}>Dark </Text>
+        <Text style={styles.textStyleDotsExplainer2}>grey dots </Text>
+        <Text style={styles.textStyleDotsExplainer}>
+          are weeks already lived.{" "}
+        </Text>
       </Text>
     </View>
   );
@@ -107,11 +112,17 @@ const styles = StyleSheet.create({
   },
   textStyleWeeks: {
     color: "white",
-    marginBottom: 35,
+    marginBottom: 30,
   },
   textStyleDotsExplainer: {
     color: "white",
-    fontSize: 10,
+    fontSize: 13,
+    marginBottom: 60,
+  },
+  textStyleDotsExplainer2: {
+    color: "grey",
+    fontSize: 13,
+    marginBottom: 60,
   },
   textStyleLivedDots: {
     color: "grey",
